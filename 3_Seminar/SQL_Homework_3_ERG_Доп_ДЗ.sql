@@ -1,8 +1,8 @@
 # 1. Создание БД
-CREATE DATABASE IF NOT EXISTS lesson_3; -- Cоздание БД, если она не существует 
+CREATE DATABASE IF NOT EXISTS homework_3_add; -- Cоздание БД, если она не существует 
 
 # 2. Подключение к БД
-USE lesson_3;
+USE homework_3_add;
 
 # 3. Создание таблицы 
 DROP TABLE IF EXISTS staff;
@@ -325,15 +325,27 @@ FROM media
 GROUP BY created_at
 ORDER BY MONTH(created_at) DESC;
 
--- Посчитаем количество документов у каждого юзера
+-- 1) Посчитаем количество документов у каждого юзера
 SELECT
 	COUNT(id) AS count_media,
     user_id, -- Внешний ключ на таблицу users
     (SELECT firstname FROM users WHERE users.id = media.user_id) AS user_name
 FROM media
+WHERE filename LIKE "%doc%" OR filename LIKE "%html%" 
+/* Решил добавить html, так как погуглил - html тоже документ цитата:" HTML-документ — это обычный текстовый документ...HTML-документ имеет расширение .html".
+И плюс в столбце body в таблице media там у медиафайлов .html - не http/https ссылка, а именно текст к файлам 
+Если я не прав, то не судите строго )) Я просто хотел поэкспериментировать и добавить оператор OR :) */
 GROUP BY user_id
-ORDER BY count_media DESC
-LIMIT 5;
+ORDER BY count_media DESC; 
 	
-
+-- 2) Посчитать лайки для документов (медиафайлов) Михаила Меркушова :) 
+-- Не решил, так как не нашел Михаила Меркушова :(
+SELECT
+	COUNT(id) AS count_media,
+    user_id, -- Внешний ключ на таблицу users
+    (SELECT firstname FROM users WHERE users.id = media.user_id) AS user_name
+FROM media
+WHERE lastname = "Меркушов"
+GROUP BY user_id
+ORDER BY count_media DESC;
 
