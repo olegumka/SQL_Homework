@@ -38,16 +38,16 @@ DROP PROCEDURE IF EXISTS print_even_numbers;
 DELIMITER $$
 CREATE PROCEDURE print_even_numbers()
 BEGIN
-    DECLARE even_numbers INT default 0;
-    DROP TABLE IF EXISTS numbers;
-    CREATE TABLE numbers (even_numbers INT);
+    DECLARE n INT default 0;
+    DROP TABLE IF EXISTS even_nums;
+    CREATE TABLE even_nums (n INT);
 
-    WHILE even_numbers < 10 DO
-    SET even_numbers = even_numbers + 2;
-    INSERT INTO numbers VALUES(even_numbers);
+    WHILE n < 10 DO
+    SET n = n + 2;
+    INSERT INTO even_nums VALUES(n);
     END WHILE;
 
-SELECT * FROM numbers;
+SELECT * FROM even_nums;
 END $$
 DELIMITER ;
 
